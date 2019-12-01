@@ -1,6 +1,11 @@
 package Juego;
 
 public class Posicion {
-    public int posicionX;
-    public int posicionY;
+    public int X;
+    public int Y;
+    
+    public Posicion(){
+        X=0;
+        Y=0;
+    }
 }
