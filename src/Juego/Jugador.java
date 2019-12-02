@@ -31,7 +31,10 @@ public class Jugador {
                     + "| 4 Casillas: " + num4
                     + "| 3 Casillas: " + num3
                     + "| 2 Casillas: " + num2);
-            int num = barco.CrearBarco();
+            int num=-1;
+            while (ComprobarBarcoMismaPosicion(barco)){
+                num = barco.CrearBarco();
+            }
             if (num >= 2 && num <= 5) {
                 switch (num) {
                     case 5: {
@@ -86,6 +89,59 @@ public class Jugador {
             }
 //            else {
 //                System.out.println("Tamaño del Barco no valido o Barco diagonal no permitido");
+//            }
+        }
+    }
+ 
+    public void CrearFlotaAuto() throws InterruptedException {
+        Barco barco;
+        int numcreados = 0;
+        for (int i = 0; i < 1; i++) {
+            barco = new Barco(5);
+            PosicionBarcos.add(barco);
+//            System.out.println("barco 5 creado auto");
+            numBarcosRestantes++;
+        }
+
+        //Crea barcos y comprueba que no exista ningun otro barco en esa posicion
+        while (numcreados != 2) {
+            barco = new Barco(4);
+            if (!ComprobarBarcoMismaPosicion(barco)) {
+                PosicionBarcos.add(barco);
+//                System.out.println("barco 4 creado auto");
+                numcreados++;
+                numBarcosRestantes++;
+            }
+//            else {
+//                System.out.println("Barco descartado");
+//            }
+        }
+        numcreados = 0;
+
+        while (numcreados != 3) {
+            barco = new Barco(3);
+            if (!ComprobarBarcoMismaPosicion(barco)) {
+                PosicionBarcos.add(barco);
+//                System.out.println("barco 3 creado auto");
+                numcreados++;
+                numBarcosRestantes++;
+            }
+//            else {
+//                System.out.println("Barco descartado");
+//            }
+        }
+        numcreados = 0;
+
+        while (numcreados != 4) {
+            barco = new Barco(2);
+            if (!ComprobarBarcoMismaPosicion(barco)) {
+                PosicionBarcos.add(barco);
+//                System.out.println("barco 2 creado auto");
+                numcreados++;
+                numBarcosRestantes++;
+            }
+//            else {
+//                System.out.println("Barco descartado");
 //            }
         }
     }
@@ -144,59 +200,7 @@ public class Jugador {
         return found;
     }
 
-    public void CrearFlotaAuto() throws InterruptedException {
-        Barco barco;
-        int numcreados = 0;
-        for (int i = 0; i < 1; i++) {
-            barco = new Barco(5);
-            PosicionBarcos.add(barco);
-//            System.out.println("barco 5 creado auto");
-            numBarcosRestantes++;
-        }
-
-        //Crea barcos y comprueba que no exista ningun otro barco en esa posicion
-        while (numcreados != 2) {
-            barco = new Barco(4);
-            if (!ComprobarBarcoMismaPosicion(barco)) {
-                PosicionBarcos.add(barco);
-//                System.out.println("barco 4 creado auto");
-                numcreados++;
-                numBarcosRestantes++;
-            }
-//            else {
-//                System.out.println("Barco descartado");
-//            }
-        }
-        numcreados = 0;
-
-        while (numcreados != 3) {
-            barco = new Barco(3);
-            if (!ComprobarBarcoMismaPosicion(barco)) {
-                PosicionBarcos.add(barco);
-//                System.out.println("barco 3 creado auto");
-                numcreados++;
-                numBarcosRestantes++;
-            }
-//            else {
-//                System.out.println("Barco descartado");
-//            }
-        }
-        numcreados = 0;
-
-        while (numcreados != 4) {
-            barco = new Barco(2);
-            if (!ComprobarBarcoMismaPosicion(barco)) {
-                PosicionBarcos.add(barco);
-//                System.out.println("barco 2 creado auto");
-                numcreados++;
-                numBarcosRestantes++;
-            }
-//            else {
-//                System.out.println("Barco descartado");
-//            }
-        }
-    }
-
+   
     public void MostrarGraficoTablero() {
         for (int i = 0; i < PosicionBarcos.size(); i++) {
             Barco b = PosicionBarcos.get(i);
@@ -278,11 +282,11 @@ public class Jugador {
                         break;
                     }
                     case 1: {
-                        System.err.println("Tu: Tocado");
+                        System.out.println("Tu: Tocado");
                         break;
                     }
                     case 2: {
-                        System.err.println("Tu: Hundido");
+                        System.out.println("Tu: Hundido");
                         maquina.numBarcosRestantes--;
                         break;
                     }
@@ -297,11 +301,11 @@ public class Jugador {
                         break;
                     }
                     case 1: {
-                        System.err.println("Tu (Auto): Tocado");
+                        System.out.println("Tu (Auto): Tocado");
                         break;
                     }
                     case 2: {
-                        System.err.println("Tu (Auto): Hundido");
+                        System.out.println("Tu (Auto): Hundido");
                         numBarcosRestantes--;
                         break;
                     }
@@ -317,11 +321,11 @@ public class Jugador {
                     break;
                 }
                 case 1: {
-                    System.err.println("Enemigo: Tocado");
+                    System.out.println("Enemigo: Tocado");
                     break;
                 }
                 case 2: {
-                    System.err.println("Enemigo: Hundido");
+                    System.out.println("Enemigo: Hundido");
                     numBarcosRestantes--;
                     break;
                 }
@@ -331,11 +335,59 @@ public class Jugador {
         }
     }
 
+    public void ComprobarPartidaExhaustivo() throws InterruptedException {
+        Jugador maquina = new Jugador();
+
+        //Crea los barcos
+        CrearFlotaAuto();
+
+        System.out.println("\nFlota Creada");
+        maquina.CrearFlotaAuto();
+        System.out.println("\nFlota Enemiga Creada");
+
+        //Rellena los barcos del tablero con los barcos del otro jugador para poder comprobar los disparos
+        MapaEnemigo.UbicarBarcosEnemigo(maquina.PosicionBarcos);
+        maquina.MapaEnemigo.UbicarBarcosEnemigo(PosicionBarcos);
+
+        //Mientras existan barcos el juego se repite
+        System.out.println("");
+        MostrarGraficoTablero();
+        
+        //Disparas Tu
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                Posicion p = new Posicion();
+                p.X = i;
+                p.Y = j;
+                switch (MapaEnemigo.Disparar(p)) {
+                    case 0: {
+                        System.out.println("Tu: Agua");
+                        break;
+                    }
+                    case 1: {
+                        System.out.println("Tu: Tocado");
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Tu: Hundido");
+                        maquina.numBarcosRestantes--;
+                        System.out.println("Barcos restantes: " + maquina.numBarcosRestantes);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+        System.out.println("FIN");
+    }
+
     public static void main(String[] args) throws InterruptedException {
         Jugador juego = new Jugador();
 //        juego.CrearFlota(); //Funciona
 //        juego.CrearFlotaAuto(); //Funciona
 //        juego.MostrarGraficoTablero(); //Funciona
-        juego.JugarPartida();
+//        juego.JugarPartida();
+        juego.ComprobarPartidaExhaustivo();
     }
 }

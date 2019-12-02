@@ -38,10 +38,10 @@ public class Tablero {
             }
         }
         //Comprueba que si ha hundido el barco
-        if (b.ComprobarBarco(DisparosRealizados)) {
+        if (found && b.ComprobarBarco(DisparosRealizados)) {
             result = 2;
         }
-
+        System.out.println("Disparando a (" + p.X + "," + p.Y + ")");
         return result;
     }
 
@@ -50,15 +50,23 @@ public class Tablero {
         Posicion p = new Posicion();
         Random aleatorio = new Random(System.currentTimeMillis());
 
-        do {
+        boolean posible = false;
+        while (!posible) {            
             int numero = aleatorio.nextInt(10);
             p.X = numero;
-
-            aleatorio.setSeed(System.currentTimeMillis());
+            aleatorio.setSeed(System.currentTimeMillis()+24);
             numero = aleatorio.nextInt(10);
             p.Y = numero;
-        } while (DisparosRealizados.contains(p));
-
+            
+            int cont=0;
+            for (int i = 0; i < DisparosRealizados.size() && cont==0; i++) {
+                if((DisparosRealizados.get(i).X == p.X) && (DisparosRealizados.get(i).Y == p.Y))
+                    cont++;
+            }
+            if (cont==0)
+                posible=true;
+        }
+        
         return Disparar(p);
     }
 

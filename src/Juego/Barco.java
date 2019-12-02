@@ -18,18 +18,19 @@ public class Barco {
         lenght = 0;
         orientacion = -1;
     }
+
     //Crea barcos de forma aleatoria
     public Barco(int longitud) throws InterruptedException {
         posicion_ini = new Posicion();
         posicion_fin = new Posicion();
-        
+
         Random aleatorio = new Random(System.currentTimeMillis());
         orientacion = aleatorio.nextInt(1); //0 Horizontal, 1 Vertical
         lenght = longitud;
         boolean valido = false;
 
         while (!valido) {
-            Thread.sleep(50);
+            Thread.sleep(150);
             posicion_ini.X = aleatorio.nextInt(10) + 1;
             aleatorio.setSeed(System.currentTimeMillis() + 8);
             posicion_ini.Y = aleatorio.nextInt(10);
@@ -122,11 +123,23 @@ public class Barco {
     }
 
     //Comprueba si el barco está en la posicion "p"
-    //Devuelve true si "p" se encuentra entre las posiciones iniciales y finales independientemente del sentido en el que se haya creado el baroo
+    //Devuelve true si "p" se encuentra entre las posiciones iniciales y finales del baroo
     public boolean ComprobarPosicionBarco(Posicion p) {
-
-        return (p.X >= posicion_ini.X) && (p.X <= posicion_fin.X)
-                || (p.Y >= posicion_ini.Y) && (p.Y <= posicion_fin.Y);
+        if (orientacion == 1) {
+            for (int j = 0; j < lenght; j++) {
+                if (posicion_ini.X == p.X && posicion_ini.Y + j == p.Y) {
+                    return true;
+                }
+            }
+        } //Horizontal
+        else {
+            for (int j = 0; j < lenght; j++) {
+                if (posicion_ini.X + j == p.X && posicion_ini.Y == p.Y) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //Devuelve true  si el barco está destruido
