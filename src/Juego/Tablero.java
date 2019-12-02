@@ -28,7 +28,7 @@ public class Tablero {
         int i = 0;
         Barco b = PosicionBarcosEnemigos.get(i);
         //Comprueba que ha tocado algun barco
-        while (!found) {
+        while (!found && i<PosicionBarcosEnemigos.size()-1) {
             if (b.ComprobarPosicionBarco(p)) {
                 found = true;
                 result = 1;
@@ -51,11 +51,11 @@ public class Tablero {
         Random aleatorio = new Random(System.currentTimeMillis());
 
         do {
-            int numero = aleatorio.nextInt(10) + 1;
+            int numero = aleatorio.nextInt(10);
             p.X = numero;
 
             aleatorio.setSeed(System.currentTimeMillis());
-            numero = aleatorio.nextInt(10) + 1;
+            numero = aleatorio.nextInt(10);
             p.Y = numero;
         } while (DisparosRealizados.contains(p));
 

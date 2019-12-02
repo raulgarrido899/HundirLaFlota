@@ -19,7 +19,6 @@ public class Barco {
         orientacion = -1;
     }
     //Crea barcos de forma aleatoria
-
     public Barco(int longitud) throws InterruptedException {
         posicion_ini = new Posicion();
         posicion_fin = new Posicion();
@@ -32,7 +31,7 @@ public class Barco {
         while (!valido) {
             Thread.sleep(50);
             posicion_ini.X = aleatorio.nextInt(10) + 1;
-            aleatorio.setSeed(System.currentTimeMillis() + 2);
+            aleatorio.setSeed(System.currentTimeMillis() + 8);
             posicion_ini.Y = aleatorio.nextInt(10);
             switch (longitud) {
                 case 2: {
@@ -88,26 +87,8 @@ public class Barco {
             }
         }
 
-        System.out.println("Variables para crear un barco: (" + posicion_ini.X + "," + posicion_ini.Y + ")"
-                + " (" + posicion_fin.X + "," + posicion_fin.Y + ")");
-    }
-
-    //Crea un barco mediante los parametros dados
-    //No barcos diagonales
-    public Barco(Posicion inicial, Posicion ultima) {
-        posicion_ini = inicial;
-
-        posicion_fin = ultima;
-
-        if (posicion_ini.X == posicion_fin.X) {
-            //El barco está orientado verticalmente (X no cambia)
-            lenght = posicion_fin.Y - posicion_ini.Y + 1;
-            orientacion = 1;
-        } else {
-            //El barco está orientado Horizontalmente (Y no cambia)
-            lenght = posicion_fin.X - posicion_ini.X + 1;
-            orientacion = 0;
-        }
+//        System.out.println("Variables para crear un barco: (" + posicion_ini.X + "," + posicion_ini.Y + ")"
+//                + " (" + posicion_fin.X + "," + posicion_fin.Y + ")");
     }
 
     //Crea el barco preguntando por pantalla donde crearlo
